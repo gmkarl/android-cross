@@ -11,8 +11,7 @@ export CFLAGS="--sysroot $PLATFORM $CFLAGS"
 export CXXFLAGS="--sysroot $PLATFORM $CXXFLAGS"
 export LDFLAGS="--sysroot $PLATFORM $LDFLAGS"
 
-#export PATH=$TOOLCHAIN/$HOST/bin:$TOOLCHAIN/bin:$PATH
-export PATH=$TOOLCHAIN/bin:$PATH
+export PATH=$TOOLCHAIN/bin:$PLATFORM/usr/bin:$PATH
 export PKG_CONFIG_LIBDIR=$PLATFORM/usr/lib/pkgconfig
 
 ../../configure --host=$(echo toolchain/bin/*-gcc | sed 's!toolchain/bin/\(.*\)-gcc!\1!') --prefix=$PLATFORM/usr "$@" && make
