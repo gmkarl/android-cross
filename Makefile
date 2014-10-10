@@ -1,5 +1,7 @@
 NDK_HOME=/home/olpc/ext4/android-ndk-r10b
 ARCH=arch-arm
+TOOLCHAIN=arm-linux-androideabi-4.8
+PLATFORM=android-9
 
 TARGET=$(ARCH).$(TOOLCHAIN).$(PLATFORM)
 TOOLCHAINDIR=$(wildcard $(NDK_HOME)/toolchains/$(TOOLCHAIN)/prebuilt/*)
@@ -17,6 +19,7 @@ prep: $(TARGET)/configure
 
 $(TARGET)/configure: $(TOOLCHAINDIR)/bin $(PLATFORMDIR)/usr
 	mkdir -p $(TARGET)
+	ln -sf $(NDK_HOME) $(TARGET)/ndk_home
 	ln -sf $(TOOLCHAINDIR) $(TARGET)/toolchain
 	ln -sf $(PLATFORMDIR) $(TARGET)/platform
 	cd $(TARGET); ln -sf platform/usr/lib/*.o .
