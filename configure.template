@@ -1,10 +1,13 @@
 #!/bin/sh
 HOST=$(echo toolchain/bin/*-gcc | sed 's!toolchain/bin/\(.*\)-gcc!\1!')
+NDK_HOME=$(readlink ndk_home)
 TOOLCHAIN=$(readlink toolchain)
 PLATFORM=$(readlink platform)
-export PATH=$TOOLCHAIN/$HOST:$TOOLCHAIN/bin:$PATH
 export CPPFLAGS="-I$PLATFORM/usr/include"
 export LDFLAGS="-L$PLATFORM/usr/lib"
 
-../../configure --host=$(echo toolchain/bin/*-gcc | sed 's!toolchain/bin/\(.*\)-gcc!\1!') --prefix=$PLATFORM/usr "$@"
+export PATH=$TOOLCHAIN/$HOST:$TOOLCHAIN/bin:$PATH
+export PKG_CONFIG_LIBDIR=$PLATFORM/usr/lib/pkgconfig
+
+../../configure --host=$(echo toolchain/bin/*-gcc | sed 's!toolchain/bin/\(.*\)-gcc!\1!') --prefix=$PLATFORM/usr "$@" && make
 
