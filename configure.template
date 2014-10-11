@@ -3,12 +3,11 @@ HOST=$(echo toolchain/bin/*-gcc | sed 's!toolchain/bin/\(.*\)-gcc!\1!')
 NDK_HOME=$(readlink ndk_home)
 TOOLCHAIN=$(readlink toolchain)
 PLATFORM=$(readlink platform)
-#export CPPFLAGS="-I$PLATFORM/usr/include $CPPFLAGS"
-#export LDFLAGS="-L$PLATFORM/usr/lib $LDFLAGS"
 
-export CPPFLAGS="--sysroot $PLATFORM $CPPFLAGS"
+export CPPFLAGS="--sysroot $PLATFORM -I$TOOLCHAIN/include $CPPFLAGS"
 export CFLAGS="--sysroot $PLATFORM $CFLAGS"
-export CXXFLAGS="--sysroot $PLATFORM $CXXFLAGS"
+export CXXFLAGS="--sysroot $PLATFORM -lgnustl_static $CXXFLAGS"
+export LIBS="-lsupc++"
 export LDFLAGS="--sysroot $PLATFORM $LDFLAGS"
 
 export PATH=$TOOLCHAIN/bin:$PLATFORM/usr/bin:$PATH
